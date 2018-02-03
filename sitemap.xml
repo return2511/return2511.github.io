@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/hexoshare.html</loc>
+    
+    <lastmod>2018-02-03T07:17:10.397Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/js_call_apply.html</loc>
     
-    <lastmod>2018-02-03T07:13:03.639Z</lastmod>
+    <lastmod>2018-02-03T07:16:03.437Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://yoursite.com/newhexo.html</loc>
     
-    <lastmod>2018-02-03T07:12:48.097Z</lastmod>
+    <lastmod>2018-02-03T07:15:21.492Z</lastmod>
     
   </url>
   
@@ -19,13 +26,6 @@
     <loc>http://yoursite.com/js_sort.html</loc>
     
     <lastmod>2018-02-03T07:09:22.430Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/hexoshare.html</loc>
-    
-    <lastmod>2018-02-03T07:07:19.497Z</lastmod>
     
   </url>
   
