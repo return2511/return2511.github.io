@@ -1,1 +1,835 @@
-<!DOCTYPE html><html class="theme-next gemini use-motion" lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"><meta name="theme-color" content="#222"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"><link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css"><link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4"><meta name="keywords" content="js,js数组,apply,"><meta name="description" content="在研究js数组降维的时候，遇到的apply方法的巧用，深深感触，如果每次都多想一点，多尝试一点，一定可以写出更合理的代码。"><meta name="keywords" content="js,js数组,apply"><meta property="og:type" content="article"><meta property="og:title" content="基于js二维数组降维的一点思考"><meta property="og:url" content="http://yoursite.com/js_call_apply.html"><meta property="og:site_name" content="啤酒泡泡"><meta property="og:description" content="在研究js数组降维的时候，遇到的apply方法的巧用，深深感触，如果每次都多想一点，多尝试一点，一定可以写出更合理的代码。"><meta property="og:locale" content="zh-Hans"><meta property="og:updated_time" content="2018-02-03T07:16:03.437Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="基于js二维数组降维的一点思考"><meta name="twitter:description" content="在研究js数组降维的时候，遇到的apply方法的巧用，深深感触，如果每次都多想一点，多尝试一点，一定可以写出更合理的代码。"><script type="text/javascript" id="hexo.configurations">var NexT=window.NexT||{},CONFIG={root:"/",scheme:"Gemini",version:"5.1.4",sidebar:{position:"left",display:"post",offset:12,b2t:!1,scrollpercent:!1,onmobile:!1},fancybox:!0,tabs:!0,motion:{enable:!0,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},duoshuo:{userId:"0",author:"博主"},algolia:{applicationID:"",apiKey:"",indexName:"",hits:{per_page:5},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}}}</script><link rel="canonical" href="http://yoursite.com/js_call_apply.html"><title>基于js二维数组降维的一点思考 | 啤酒泡泡</title></head><body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans"><div class="container sidebar-position-left page-post-detail"><div class="headband"></div><header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-wrapper"><div class="site-meta"><div class="custom-logo-site-title"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span> <span class="site-title">啤酒泡泡</span><span class="logo-line-after"><i></i></span></a></div><p class="site-subtitle"></p></div><div class="site-nav-toggle"> <button><span class="btn-bar"></span><span class="btn-bar"></span><span class="btn-bar"></span></button></div></div><nav class="site-nav"><ul id="menu" class="menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i><br> 首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i><br> 关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i><br> 标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i><br> 分类</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i><br> 归档</a></li></ul></nav></div></header><main id="main" class="main"><div class="main-inner"><div class="content-wrap"><div id="content" class="content"><div id="posts" class="posts-expand"><article class="post post-type-normal" itemscope itemtype="http://schema.org/Article"><div class="post-block"><link itemprop="mainEntityOfPage" href="http://yoursite.com/js_call_apply.html"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="name" content="洪杨"><meta itemprop="description" content=""><meta itemprop="image" content="/images/avatar.png"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="啤酒泡泡"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">基于js二维数组降维的一点思考</h1><div class="post-meta"><span class="post-time"><span class="post-meta-item-icon"><i class="fa fa-calendar-o"></i></span> <span class="post-meta-item-text">发表于</span> <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T00:00:00+08:00">2018-01-07</time> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-calendar-check-o"></i></span> <span class="post-meta-item-text">更新于&#58;</span> <time title="更新于" itemprop="dateModified" datetime="2018-02-03T15:16:03+08:00">2018-02-03</time></span> <span class="post-category"><span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-folder-o"></i></span> <span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/js/" itemprop="url" rel="index"><span itemprop="name">js</span></a></span></span><div class="post-wordcount"><span class="post-meta-item-icon"><i class="fa fa-file-word-o"></i></span> <span class="post-meta-item-text">字数统计&#58;</span><span title="字数统计"></span> <span class="post-meta-divider">|</span><span class="post-meta-item-icon"><i class="fa fa-clock-o"></i></span> <span class="post-meta-item-text">阅读时长 &asymp;</span><span title="阅读时长"></span></div></div></header><div class="post-body" itemprop="articleBody"><blockquote><p>在研究js数组降维的时候，遇到的apply方法的巧用，深深感触，如果每次都多想一点，多尝试一点，一定可以写出更合理的代码。</p></blockquote><a id="more"></a><h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>最近准备重新拾起js，励志做一个合格的FE开发。于是买了几本书（装作好像是认真的样子），其中自己比较中意的有两本，一本是node的深入浅出，一本是js的蝴蝶书。认真翻阅书的时候，才会发现以前自己代码中遇到的错误，以及以前“不小心”解决的问题，但不知道原理是什么，现在搞懂了一点。感觉很有成就感，最近几日遇到的问题，想着一并记下来。也许在未来的某一天，我会翻阅到这篇文章，发现其中的错误并改正，但我觉得能发现问题就是好事。<br></p><h4 id="js降维问题"><a href="#js降维问题" class="headerlink" title="js降维问题"></a>js降维问题</h4><p>前几天看到一个js问题— 二维数组降维的问题。第一眼看到这个问题，我X，这特喵的不是侮辱智商么。当即控制台调出来。</p><h5 id="二次遍历循环降维"><a href="#二次遍历循环降维" class="headerlink" title="二次遍历循环降维"></a>二次遍历循环降维</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArr = [</span><br><span class="line">    [<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'0'</span>],</span><br><span class="line">    [<span class="string">'w'</span>, <span class="string">'o'</span>, <span class="string">'r'</span>, <span class="string">'l'</span>, <span class="string">'d'</span>],</span><br><span class="line">    [<span class="string">'!'</span>],</span><br><span class="line">    [<span class="string">'I'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="string">'j'</span>, <span class="string">'s'</span>, <span class="string">'!'</span>]</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduceArr</span> (<span class="params"> arr </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result =[] ;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> ; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; arr[i].length; j++)&#123;</span><br><span class="line">            result.push(arr[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reduceArr(myArr));</span><br></pre></td></tr></table></figure><h5 id="使用cancat方法降维"><a href="#使用cancat方法降维" class="headerlink" title="使用cancat方法降维"></a>使用cancat方法降维</h5><p>然而狗哥细细一想，事情可能并没有那么简单，怎么说自己也要做一个有节操的jser，这段代码写得丝毫没有技术含量。于是狗哥沉思一段时间，想到了concat方法。<br></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArr = [</span><br><span class="line">    [<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'0'</span>],</span><br><span class="line">    [<span class="string">'w'</span>, <span class="string">'o'</span>, <span class="string">'r'</span>, <span class="string">'l'</span>, <span class="string">'d'</span>],</span><br><span class="line">    [<span class="string">'!'</span>],</span><br><span class="line">    [<span class="string">'I'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="string">'j'</span>, <span class="string">'s'</span>, <span class="string">'!'</span>]</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduceArr</span> (<span class="params"> arr </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result =[] ;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> ; i &lt; arr.length; i++) &#123;</span><br><span class="line">        result = result.concat(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reduceArr(myArr));</span><br></pre></td></tr></table></figure><p></p><p>使用concat方法可以减少一次内部循环，看起来好很多了。暂时告了一个段落。</p><h5 id="apply方法的使用"><a href="#apply方法的使用" class="headerlink" title="apply方法的使用"></a>apply方法的使用</h5><p>可是在我浏览论坛的时候，看到这个面试题，我顺手看了答案。网上普遍认为这个答案比较好。<br></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArr = [</span><br><span class="line">    [<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'0'</span>],</span><br><span class="line">    [<span class="string">'w'</span>, <span class="string">'o'</span>, <span class="string">'r'</span>, <span class="string">'l'</span>, <span class="string">'d'</span>],</span><br><span class="line">    [<span class="string">'!'</span>],</span><br><span class="line">    [<span class="string">'I'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="string">'j'</span>, <span class="string">'s'</span>, <span class="string">'!'</span>]</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduceArr</span> (<span class="params"> arr </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.concat.apply([], arr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reduceArr(myArr));</span><br></pre></td></tr></table></figure><p></p><p>其实内心是一脸懵逼状态，apply还有这种打开方式？？<br></p><h4 id="再学习call和apply方法"><a href="#再学习call和apply方法" class="headerlink" title="再学习call和apply方法"></a>再学习call和apply方法</h4><p>以前仅仅知道call和apply方法是为了动态改变this指向而存在的。</p><blockquote><p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p></blockquote><p>可是并不知道还有这种打开方式。顺手贴一段call和apply方法的基本用法。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>) </span>&#123;&#125;;</span><br></pre></td></tr></table></figure><p>可以用如下方式调用</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func.call(<span class="keyword">this</span>, arg1, arg2);</span><br><span class="line"><span class="comment">//or</span></span><br><span class="line">func.apply(<span class="keyword">this</span>, [arg1, arg2]);</span><br></pre></td></tr></table></figure><p>其中 this 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p><p>另外，在js中，如果函数的参数个数是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时，用 call，而不确定的时候，用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。<br><br>那么apply用来降维数组究竟为何故呢？</p><h4 id="apply的灵活应用"><a href="#apply的灵活应用" class="headerlink" title="apply的灵活应用"></a>apply的灵活应用</h4><p>apply调用的时候，第一个参数是对象，第二个参数是一个数组集合，但是在apply执行时，会把数组解析为一个个参数列表。比如([‘a’,’b’,’c’]转换为 a,b,c ) ,这样就有点厉害了，渐渐的好像也懂了上面那段代码的意图了。<br>比如说</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>];</span><br><span class="line"><span class="keyword">var</span> max = <span class="built_in">Math</span>.max.apply(<span class="literal">null</span>,arr);</span><br><span class="line"><span class="built_in">console</span>.log(max);</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">再比如</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="keyword">var</span> arr1 = [<span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>];</span><br><span class="line"><span class="built_in">Array</span>.prototype.push.apply(arr1,arr2);   </span><br><span class="line"><span class="built_in">console</span>.log(arr1); <span class="comment">//["4", "5", "6", "1", "2", "3"]</span></span><br></pre></td></tr></table></figure><p>push不可以接受数组，但是可以接受参数列表。所以再看这段代码<br></p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArr = [</span><br><span class="line">    [<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'0'</span>],</span><br><span class="line">    [<span class="string">'w'</span>, <span class="string">'o'</span>, <span class="string">'r'</span>, <span class="string">'l'</span>, <span class="string">'d'</span>],</span><br><span class="line">    [<span class="string">'!'</span>],</span><br><span class="line">    [<span class="string">'I'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="string">'j'</span>, <span class="string">'s'</span>, <span class="string">'!'</span>]</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduceArr</span> (<span class="params"> arr </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.concat.apply([], arr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reduceArr(myArr));</span><br></pre></td></tr></table></figure><p></p><p>apply把二维数组降为一维的参数列表。然后使用cancat拼接到一个数组内，从而完成了降维。这个方法姑且不谈时间复杂度，但是能把最初的最low的方法优化到一行代码还是很开心的。</p><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>js，对之一直怀着一颗敬畏之心，越学习，越感觉自己的无知，但同时也想认真的去探索其中的奥秘。同时coding也要多多执着，不能将就。</p></div><div><div><div style="text-align:center;color:#ccc;font-size:14px">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div></div></div><footer class="post-footer"><div class="post-tags"><a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a><a href="/tags/js数组/" rel="tag"><i class="fa fa-tag"></i> js数组</a><a href="/tags/apply/" rel="tag"><i class="fa fa-tag"></i> apply</a></div><div class="post-nav"><div class="post-nav-next post-nav-item"><a href="/hexoshare.html" rel="next" title="hexo经验分享"><i class="fa fa-chevron-left"></i> hexo经验分享</a></div><span class="post-nav-divider"></span><div class="post-nav-prev post-nav-item"> <a href="/js_sort.html" rel="prev" title="基于js的排序问题">基于js的排序问题<i class="fa fa-chevron-right"></i></a></div></div></footer></div></article><div class="post-spread"></div></div></div></div><div class="sidebar-toggle"><div class="sidebar-toggle-line-wrap"><span class="sidebar-toggle-line sidebar-toggle-line-first"></span><span class="sidebar-toggle-line sidebar-toggle-line-middle"></span><span class="sidebar-toggle-line sidebar-toggle-line-last"></span></div></div><aside id="sidebar" class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap"> 文章目录</li><li class="sidebar-nav-overview" data-target="site-overview-wrap"> 站点概览</li></ul><section class="site-overview-wrap sidebar-panel"><div class="site-overview"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"> <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="洪杨"><p class="site-author-name" itemprop="name">洪杨</p><p class="site-description motion-element" itemprop="description">生活不止有苟且，还有读不懂的诗和到不了的远方。</p></div><nav class="site-state motion-element"><div class="site-state-item site-state-posts"> <a href="/archives/"><span class="site-state-item-count">7</span> <span class="site-state-item-name">日志</span></a></div><div class="site-state-item site-state-categories"> <a href="/categories/index.html"><span class="site-state-item-count">5</span> <span class="site-state-item-name">分类</span></a></div><div class="site-state-item site-state-tags"> <a href="/tags/index.html"><span class="site-state-item-count">12</span> <span class="site-state-item-name">标签</span></a></div></nav></div></section><section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active"><div class="post-toc"><div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#js降维问题"><span class="nav-number">2.</span> <span class="nav-text">js降维问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#二次遍历循环降维"><span class="nav-number">2.1.</span> <span class="nav-text">二次遍历循环降维</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用cancat方法降维"><span class="nav-number">2.2.</span> <span class="nav-text">使用cancat方法降维</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#apply方法的使用"><span class="nav-number">2.3.</span> <span class="nav-text">apply方法的使用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再学习call和apply方法"><span class="nav-number">3.</span> <span class="nav-text">再学习call和apply方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apply的灵活应用"><span class="nav-number">4.</span> <span class="nav-text">apply的灵活应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div></div></section></div></aside></div></main><footer id="footer" class="footer"><div class="footer-inner"><div class="copyright">&copy; <span itemprop="copyrightYear">2018</span><span class="with-love"><i class="fa fa-user"></i></span> <span class="author" itemprop="copyrightHolder">洪杨</span> <span class="post-meta-divider">|</span> <span>Hosted by <a href="https://pages.coding.me" style="font-weight:700">Coding Pages</a></span></div><div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div> <span class="post-meta-divider">|</span><div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div></div></footer><div class="back-to-top"><i class="fa fa-arrow-up"></i></div></div><script type="text/javascript">"[object Function]"!==Object.prototype.toString.call(window.Promise)&&(window.Promise=null)</script><script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script><script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script><script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script><script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script><script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script><script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script><script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script><script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script></body><script type="text/javascript" src="/js/src/love.js"></script></html>
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="js,js数组,apply," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在研究js数组降维的时候，遇到的apply方法的巧用，深深感触，如果每次都多想一点，多尝试一点，一定可以写出更合理的代码。">
+<meta name="keywords" content="js,js数组,apply">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于js二维数组降维的一点思考">
+<meta property="og:url" content="http://yoursite.com/js_call_apply.html">
+<meta property="og:site_name" content="啤酒泡泡">
+<meta property="og:description" content="在研究js数组降维的时候，遇到的apply方法的巧用，深深感触，如果每次都多想一点，多尝试一点，一定可以写出更合理的代码。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-03T07:16:03.437Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于js二维数组降维的一点思考">
+<meta name="twitter:description" content="在研究js数组降维的时候，遇到的apply方法的巧用，深深感触，如果每次都多想一点，多尝试一点，一定可以写出更合理的代码。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":5},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/js_call_apply.html"/>
+
+
+
+
+
+  <title>基于js二维数组降维的一点思考 | 啤酒泡泡</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">啤酒泡泡</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/js_call_apply.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="洪杨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="啤酒泡泡">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于js二维数组降维的一点思考</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T00:00:00+08:00">
+                2018-01-07
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-02-03T15:16:03+08:00">
+                2018-02-03
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>在研究js数组降维的时候，遇到的apply方法的巧用，深深感触，如果每次都多想一点，多尝试一点，一定可以写出更合理的代码。</p>
+</blockquote>
+<a id="more"></a>
+<h4 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h4><p>最近准备重新拾起js，励志做一个合格的FE开发。于是买了几本书（装作好像是认真的样子），其中自己比较中意的有两本，一本是node的深入浅出，一本是js的蝴蝶书。认真翻阅书的时候，才会发现以前自己代码中遇到的错误，以及以前“不小心”解决的问题，但不知道原理是什么，现在搞懂了一点。感觉很有成就感，最近几日遇到的问题，想着一并记下来。也许在未来的某一天，我会翻阅到这篇文章，发现其中的错误并改正，但我觉得能发现问题就是好事。<br></p>
+<h4 id="js降维问题"><a href="#js降维问题" class="headerlink" title="js降维问题"></a>js降维问题</h4><p>前几天看到一个js问题— 二维数组降维的问题。第一眼看到这个问题，我X，这特喵的不是侮辱智商么。当即控制台调出来。</p>
+<h5 id="二次遍历循环降维"><a href="#二次遍历循环降维" class="headerlink" title="二次遍历循环降维"></a>二次遍历循环降维</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArr = [</span><br><span class="line">    [<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'0'</span>],</span><br><span class="line">    [<span class="string">'w'</span>, <span class="string">'o'</span>, <span class="string">'r'</span>, <span class="string">'l'</span>, <span class="string">'d'</span>],</span><br><span class="line">    [<span class="string">'!'</span>],</span><br><span class="line">    [<span class="string">'I'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="string">'j'</span>, <span class="string">'s'</span>, <span class="string">'!'</span>]</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduceArr</span> (<span class="params"> arr </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result =[] ;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> ; i &lt; arr.length; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; arr[i].length; j++)&#123;</span><br><span class="line">            result.push(arr[i][j]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reduceArr(myArr));</span><br></pre></td></tr></table></figure>
+<h5 id="使用cancat方法降维"><a href="#使用cancat方法降维" class="headerlink" title="使用cancat方法降维"></a>使用cancat方法降维</h5><p>然而狗哥细细一想，事情可能并没有那么简单，怎么说自己也要做一个有节操的jser，这段代码写得丝毫没有技术含量。于是狗哥沉思一段时间，想到了concat方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArr = [</span><br><span class="line">    [<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'0'</span>],</span><br><span class="line">    [<span class="string">'w'</span>, <span class="string">'o'</span>, <span class="string">'r'</span>, <span class="string">'l'</span>, <span class="string">'d'</span>],</span><br><span class="line">    [<span class="string">'!'</span>],</span><br><span class="line">    [<span class="string">'I'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="string">'j'</span>, <span class="string">'s'</span>, <span class="string">'!'</span>]</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduceArr</span> (<span class="params"> arr </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> result =[] ;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span> ; i &lt; arr.length; i++) &#123;</span><br><span class="line">        result = result.concat(arr[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reduceArr(myArr));</span><br></pre></td></tr></table></figure></p>
+<p>使用concat方法可以减少一次内部循环，看起来好很多了。暂时告了一个段落。</p>
+<h5 id="apply方法的使用"><a href="#apply方法的使用" class="headerlink" title="apply方法的使用"></a>apply方法的使用</h5><p>可是在我浏览论坛的时候，看到这个面试题，我顺手看了答案。网上普遍认为这个答案比较好。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArr = [</span><br><span class="line">    [<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'0'</span>],</span><br><span class="line">    [<span class="string">'w'</span>, <span class="string">'o'</span>, <span class="string">'r'</span>, <span class="string">'l'</span>, <span class="string">'d'</span>],</span><br><span class="line">    [<span class="string">'!'</span>],</span><br><span class="line">    [<span class="string">'I'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="string">'j'</span>, <span class="string">'s'</span>, <span class="string">'!'</span>]</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduceArr</span> (<span class="params"> arr </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.concat.apply([], arr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reduceArr(myArr));</span><br></pre></td></tr></table></figure></p>
+<p>其实内心是一脸懵逼状态，apply还有这种打开方式？？<br></p>
+<h4 id="再学习call和apply方法"><a href="#再学习call和apply方法" class="headerlink" title="再学习call和apply方法"></a>再学习call和apply方法</h4><p>以前仅仅知道call和apply方法是为了动态改变this指向而存在的。</p>
+<blockquote>
+<p>call 和 apply 都是为了改变某个函数运行时的 context 即上下文而存在的，换句话说，就是为了改变函数体内部 this 的指向。因为 JavaScript 的函数存在「定义时上下文」和「运行时上下文」以及「上下文是可以改变的」这样的概念。</p>
+</blockquote>
+<p>可是并不知道还有这种打开方式。顺手贴一段call和apply方法的基本用法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> func = <span class="function"><span class="keyword">function</span>(<span class="params">arg1, arg2</span>) </span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+<p>可以用如下方式调用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func.call(<span class="keyword">this</span>, arg1, arg2);</span><br><span class="line"><span class="comment">//or</span></span><br><span class="line">func.apply(<span class="keyword">this</span>, [arg1, arg2]);</span><br></pre></td></tr></table></figure>
+<p>其中 this 是你想指定的上下文，他可以任何一个 JavaScript 对象(JavaScript 中一切皆对象)，call 需要把参数按顺序传递进去，而 apply 则是把参数放在数组里。</p>
+<p>另外，在js中，如果函数的参数个数是不固定的，因此要说适用条件的话，当你的参数是明确知道数量时，用 call，而不确定的时候，用 apply，然后把参数 push 进数组传递进去。当参数数量不确定时，函数内部也可以通过 arguments 这个数组来便利所有的参数。<br><br>那么apply用来降维数组究竟为何故呢？</p>
+<h4 id="apply的灵活应用"><a href="#apply的灵活应用" class="headerlink" title="apply的灵活应用"></a>apply的灵活应用</h4><p>apply调用的时候，第一个参数是对象，第二个参数是一个数组集合，但是在apply执行时，会把数组解析为一个个参数列表。比如([‘a’,’b’,’c’]转换为 a,b,c ) ,这样就有点厉害了，渐渐的好像也懂了上面那段代码的意图了。<br>比如说</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arr = [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>, <span class="string">'4'</span>, <span class="string">'5'</span>];</span><br><span class="line"><span class="keyword">var</span> max = <span class="built_in">Math</span>.max.apply(<span class="literal">null</span>,arr);</span><br><span class="line"><span class="built_in">console</span>.log(max);</span><br><span class="line"><span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">再比如</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="keyword">var</span> arr1 = [<span class="string">'4'</span>, <span class="string">'5'</span>, <span class="string">'6'</span>];</span><br><span class="line"><span class="keyword">var</span> arr2 = [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>];</span><br><span class="line"><span class="built_in">Array</span>.prototype.push.apply(arr1,arr2);   </span><br><span class="line"><span class="built_in">console</span>.log(arr1); <span class="comment">//["4", "5", "6", "1", "2", "3"]</span></span><br></pre></td></tr></table></figure>
+<p>push不可以接受数组，但是可以接受参数列表。所以再看这段代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myArr = [</span><br><span class="line">    [<span class="string">'h'</span>, <span class="string">'e'</span>, <span class="string">'l'</span>, <span class="string">'l'</span>, <span class="string">'0'</span>],</span><br><span class="line">    [<span class="string">'w'</span>, <span class="string">'o'</span>, <span class="string">'r'</span>, <span class="string">'l'</span>, <span class="string">'d'</span>],</span><br><span class="line">    [<span class="string">'!'</span>],</span><br><span class="line">    [<span class="string">'I'</span>, <span class="string">'l'</span>, <span class="string">'o'</span>, <span class="string">'v'</span>, <span class="string">'e'</span>],</span><br><span class="line">    [<span class="string">'j'</span>, <span class="string">'s'</span>, <span class="string">'!'</span>]</span><br><span class="line">];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reduceArr</span> (<span class="params"> arr </span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Array</span>.prototype.concat.apply([], arr);</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(reduceArr(myArr));</span><br></pre></td></tr></table></figure></p>
+<p>apply把二维数组降为一维的参数列表。然后使用cancat拼接到一个数组内，从而完成了降维。这个方法姑且不谈时间复杂度，但是能把最初的最low的方法优化到一行代码还是很开心的。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>js，对之一直怀着一颗敬畏之心，越学习，越感觉自己的无知，但同时也想认真的去探索其中的奥秘。同时coding也要多多执着，不能将就。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+          
+            <a href="/tags/js数组/" rel="tag"><i class="fa fa-tag"></i> js数组</a>
+          
+            <a href="/tags/apply/" rel="tag"><i class="fa fa-tag"></i> apply</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/hexoshare.html" rel="next" title="hexo经验分享">
+                <i class="fa fa-chevron-left"></i> hexo经验分享
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/js_sort.html" rel="prev" title="基于js的排序问题">
+                基于js的排序问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="洪杨" />
+            
+              <p class="site-author-name" itemprop="name">洪杨</p>
+              <p class="site-description motion-element" itemprop="description">生活不止有苟且，还有读不懂的诗和到不了的远方。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#js降维问题"><span class="nav-number">2.</span> <span class="nav-text">js降维问题</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#二次遍历循环降维"><span class="nav-number">2.1.</span> <span class="nav-text">二次遍历循环降维</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用cancat方法降维"><span class="nav-number">2.2.</span> <span class="nav-text">使用cancat方法降维</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#apply方法的使用"><span class="nav-number">2.3.</span> <span class="nav-text">apply方法的使用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再学习call和apply方法"><span class="nav-number">3.</span> <span class="nav-text">再学习call和apply方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#apply的灵活应用"><span class="nav-number">4.</span> <span class="nav-text">apply的灵活应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">洪杨</span>
+
+  <span class="post-meta-divider">|</span>
+  <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>
