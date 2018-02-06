@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>our62.top/ourstroy.html</loc>
+    
+    <lastmod>2018-02-06T15:56:18.697Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>our62.top/git_study.html</loc>
     
     <lastmod>2018-02-03T08:25:30.185Z</lastmod>
@@ -37,13 +44,6 @@
   </url>
   
   <url>
-    <loc>our62.top/ourstroy.html</loc>
-    
-    <lastmod>2018-02-03T07:03:42.333Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>our62.top/phpsort.html</loc>
     
     <lastmod>2018-01-29T13:28:59.757Z</lastmod>
@@ -51,14 +51,14 @@
   </url>
   
   <url>
-    <loc>our62.top/categories/index.html</loc>
+    <loc>our62.top/tags/index.html</loc>
     
     <lastmod>2018-01-27T17:13:03.998Z</lastmod>
     
   </url>
   
   <url>
-    <loc>our62.top/tags/index.html</loc>
+    <loc>our62.top/categories/index.html</loc>
     
     <lastmod>2018-01-27T17:13:03.998Z</lastmod>
     
