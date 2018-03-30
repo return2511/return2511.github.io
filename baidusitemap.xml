@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>our62.top/ourstroy.html</loc>
+    <lastmod>2018-03-30T17:43:59.466Z</lastmod>
+    <data>
+        <display>
+        <title>余生，请多指教</title>
+        <pubTime>2017-12-28T11:33:45.000Z</pubTime>
+        
+        <tag>情书</tag>
+         
+        <tag>lover</tag>
+         
+         
+           
+             
+              <breadCrumb title="生活" url="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>our62.top/eslint.html</loc>
     <lastmod>2018-03-30T17:42:54.747Z</lastmod>
     <data>
@@ -85,28 +107,6 @@
            
              
               <breadCrumb title="js" url="http://yoursite.com/categories/js/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>our62.top/ourstroy.html</loc>
-    <lastmod>2018-03-07T15:00:39.816Z</lastmod>
-    <data>
-        <display>
-        <title>余生，请多指教</title>
-        <pubTime>2017-12-28T11:33:45.000Z</pubTime>
-        
-        <tag>情书</tag>
-         
-        <tag>lover</tag>
-         
-         
-           
-             
-              <breadCrumb title="生活" url="http://yoursite.com/categories/%E7%94%9F%E6%B4%BB/"/>
           
         </display>
     </data>
