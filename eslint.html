@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="sublime,eslint,react," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="eslint在sublime中的配置和使用">
+<meta name="keywords" content="sublime,eslint,react">
+<meta property="og:type" content="article">
+<meta property="og:title" content="eslint的使用">
+<meta property="og:url" content="http://yoursite.com/eslint.html">
+<meta property="og:site_name" content="啤酒泡泡">
+<meta property="og:description" content="eslint在sublime中的配置和使用">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-30T17:42:54.747Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="eslint的使用">
+<meta name="twitter:description" content="eslint在sublime中的配置和使用">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":5},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/eslint.html"/>
+
+
+
+
+
+  <title>eslint的使用 | 啤酒泡泡</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5107b76fc62676dd7b1eccd4126ad6df";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">啤酒泡泡</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+  <script>
+    (function(){
+        if(''){
+            if (prompt('time we together (format: yyyymmdd)') !== ''){
+                alert('sorry,it`s not today!');
+                history.back();
+            }
+        }
+    })();
+</script>
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/eslint.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="洪杨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="啤酒泡泡">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">eslint的使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-31T01:01:00+08:00">
+                2018-03-31
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-03-31T01:42:54+08:00">
+                2018-03-31
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/tools/" itemprop="url" rel="index">
+                    <span itemprop="name">tools</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>eslint在sublime中的配置和使用</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>入职豚厂以来，第一次用react写了一个正式项目。发现真正的实践和看教程，看官网文档等等都是很不一样的。</p>
+<p>正式的项目也是和一个简单的 “TO-DO List” 区别还是很大的。但是不管怎么说，迈出了第一步，希望在接下来的时间，在实践中去充实自己的react，另外也会针对自己项目中遇到的问题，做blog记载。认真学习react技术，以此自勉～</p>
+<h3 id="第一次项目"><a href="#第一次项目" class="headerlink" title="第一次项目"></a>第一次项目</h3><p>说到自己的第一次项目，最让我触目惊心至今的还是第一次提交结束，队友review代码的时候。提出了让我跑一下项目中的eslint，然后把格式规范了。</p>
+<p>于是乎，跑完了第一个eslint report，卧槽，特喵的一大片红啊～～～</p>
+<p>然后一点点改，生生改了一天多，其中痛苦自是不言而喻的。</p>
+<h3 id="eslint工具"><a href="#eslint工具" class="headerlink" title="eslint工具"></a>eslint工具</h3><p>项目中使用了npm，但是不能每次都用report去检查代码啊，这是一件很痛苦的事情啊。</p>
+<p>于是乎，想着sublime（我是sublime忠实粉，WS用户轻喷）有没有eslint插件，因为之前用过jshint，查了下发现是有eslint插件的。于是乎准备动手搭建sublime的eslint。</p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><h4 id="本地全局安装eslint"><a href="#本地全局安装eslint" class="headerlink" title="本地全局安装eslint"></a>本地全局安装eslint</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install eslint -g</span><br></pre></td></tr></table></figure>
+<h4 id="sublime安装插件"><a href="#sublime安装插件" class="headerlink" title="sublime安装插件"></a>sublime安装插件</h4><p>这里要安装两个插件</p>
+<ul>
+<li>SublimeLinter</li>
+<li>SublimeLinter-eslint</li>
+</ul>
+<p>ps：网上大部分教程都是说要安装一个叫做：SublimeLinter-contrib-eslint的插件，但是我在sublime的package install 里面没有找到这个插件，是不是改名了，这块我也不清楚，反正我是安装了SublimeLinter-eslint，这个插件可以用的。</p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>这里简单说一下，其实SublimeLinter只是一个linter的壳子，sublime兼容了很多linter，都需要在sublimeLinter里使用，所以配置也是在其内部配置。</p>
+<p>据说要有两个配置</p>
+<h5 id="sublimeLinter集成配置"><a href="#sublimeLinter集成配置" class="headerlink" title="sublimeLinter集成配置"></a>sublimeLinter集成配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">// 摘抄自网上  链接：https://www.jianshu.com/p/e826e13c67ec</span><br><span class="line">&#123;</span><br><span class="line">    &quot;user&quot;: &#123;</span><br><span class="line">        &quot;debug&quot;: true, // 开启 debug 选项</span><br><span class="line">        &quot;delay&quot;: 0.25,</span><br><span class="line">        &quot;error_color&quot;: &quot;D02000&quot;,</span><br><span class="line">        &quot;gutter_theme&quot;: &quot;Packages/SublimeLinter/gutter-themes/Default/Default.gutter-theme&quot;,</span><br><span class="line">        &quot;gutter_theme_excludes&quot;: [],</span><br><span class="line">        &quot;lint_mode&quot;: &quot;background&quot;,</span><br><span class="line">        &quot;linters&quot;: &#123;</span><br><span class="line">            &quot;eslint&quot;: &#123;</span><br><span class="line">                &quot;@disable&quot;: false,</span><br><span class="line">                &quot;args&quot;: [],</span><br><span class="line">                &quot;excludes&quot;: []</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;jshint&quot;: &#123;</span><br><span class="line">                &quot;@disable&quot;: false,</span><br><span class="line">                &quot;args&quot;: [],</span><br><span class="line">                &quot;excludes&quot;: []</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;php&quot;: &#123;</span><br><span class="line">                &quot;@disable&quot;: false,</span><br><span class="line">                &quot;args&quot;: [],</span><br><span class="line">                &quot;excludes&quot;: []</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;mark_style&quot;: &quot;outline&quot;,</span><br><span class="line">        &quot;no_column_highlights_line&quot;: false,</span><br><span class="line">        &quot;passive_warnings&quot;: false,</span><br><span class="line">        &quot;paths&quot;: &#123;</span><br><span class="line">            &quot;linux&quot;: [],</span><br><span class="line">            &quot;osx&quot;: [</span><br><span class="line">                &quot;/Users/wang/.nvm/versions/node/v5.0.0/bin&quot; // 设置 node 路径</span><br><span class="line">            ],</span><br><span class="line">            &quot;windows&quot;: []</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;python_paths&quot;: &#123;</span><br><span class="line">            &quot;linux&quot;: [],</span><br><span class="line">            &quot;osx&quot;: [],</span><br><span class="line">            &quot;windows&quot;: []</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;rc_search_limit&quot;: 3,</span><br><span class="line">        &quot;shell_timeout&quot;: 10,</span><br><span class="line">        &quot;show_errors_on_save&quot;: false,</span><br><span class="line">        &quot;show_marks_in_minimap&quot;: true,</span><br><span class="line">        &quot;syntax_map&quot;: &#123;</span><br><span class="line">            &quot;html (django)&quot;: &quot;html&quot;,</span><br><span class="line">            &quot;html (rails)&quot;: &quot;html&quot;,</span><br><span class="line">            &quot;html 5&quot;: &quot;html&quot;,</span><br><span class="line">            &quot;javascript (babel)&quot;: &quot;javascript&quot;,</span><br><span class="line">            &quot;magicpython&quot;: &quot;python&quot;,</span><br><span class="line">            &quot;php&quot;: &quot;html&quot;,</span><br><span class="line">            &quot;python django&quot;: &quot;python&quot;,</span><br><span class="line">            &quot;pythonimproved&quot;: &quot;python&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;warning_color&quot;: &quot;DDB700&quot;,</span><br><span class="line">        &quot;wrap_find&quot;: true</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="规则配置"><a href="#规则配置" class="headerlink" title="规则配置"></a>规则配置</h5><p>配置的一份规则文件仅供参考(摘抄至网络)，保存到代码根目录，文件名为.eslintrc。</p>
+<p>官方文档：<a href="http://eslint.org/docs/rules/" target="_blank" rel="noopener">http://eslint.org/docs/rules/</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">//安装gulp-eslint libraries.io/npm/gulp-eslint</span><br><span class="line">&#123;</span><br><span class="line">  &quot;globals&quot;: &#123;</span><br><span class="line">    &quot;$&quot;: true,                                //zepto</span><br><span class="line">    &quot;define&quot;: true,                           //requirejs</span><br><span class="line">    &quot;require&quot;: true                           //requirejs</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;env&quot;: &#123;</span><br><span class="line">    &quot;browser&quot;: true                           //执行环境 浏览器</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;rules&quot;: &#123;</span><br><span class="line">    //官方文档 http://eslint.org/docs/rules/</span><br><span class="line">    //警告</span><br><span class="line">    // &quot;quotes&quot;: [0, &quot;single&quot;],                  //建议使用单引号</span><br><span class="line">    // &quot;no-inner-declarations&quot;: [0, &quot;both&quot;],     //不建议在&#123;&#125;代码块内部声明变量或函数</span><br><span class="line">    &quot;no-extra-boolean-cast&quot;: 1,               //多余的感叹号转布尔型</span><br><span class="line">    &quot;no-extra-semi&quot;: 1,                       //多余的分号</span><br><span class="line">    &quot;no-extra-parens&quot;: 1,                     //多余的括号</span><br><span class="line">    &quot;no-empty&quot;: 1,                            //空代码块</span><br><span class="line">    &quot;no-use-before-define&quot;: [1, &quot;nofunc&quot;],    //使用前未定义</span><br><span class="line">    &quot;complexity&quot;: [1, 10],                    //圈复杂度大于10 警告</span><br><span class="line"></span><br><span class="line">    //常见错误</span><br><span class="line">    &quot;comma-dangle&quot;: [2, &quot;never&quot;],             //定义数组或对象最后多余的逗号</span><br><span class="line">    &quot;no-debugger&quot;: 2,                         //debugger 调试代码未删除</span><br><span class="line">    &quot;no-constant-condition&quot;: 2,               //常量作为条件</span><br><span class="line">    &quot;no-dupe-args&quot;: 2,                        //参数重复</span><br><span class="line">    &quot;no-dupe-keys&quot;: 2,                        //对象属性重复</span><br><span class="line">    &quot;no-duplicate-case&quot;: 2,                   //case重复</span><br><span class="line">    &quot;no-empty-character-class&quot;: 2,            //正则无法匹配任何值</span><br><span class="line">    &quot;no-invalid-regexp&quot;: 2,                   //无效的正则</span><br><span class="line">    &quot;no-func-assign&quot;: 2,                      //函数被赋值</span><br><span class="line">    &quot;valid-typeof&quot;: 2,                        //无效的类型判断</span><br><span class="line">    &quot;no-unreachable&quot;: 2,                      //不可能执行到的代码</span><br><span class="line">    &quot;no-unexpected-multiline&quot;: 2,             //行尾缺少分号可能导致一些意外情况</span><br><span class="line">    &quot;no-sparse-arrays&quot;: 2,                    //数组中多出逗号</span><br><span class="line">    &quot;no-shadow-restricted-names&quot;: 2,          //关键词与命名冲突</span><br><span class="line">    &quot;no-undef&quot;: 2,                            //变量未定义</span><br><span class="line">    &quot;no-unused-vars&quot;: 2,                      //变量定义后未使用</span><br><span class="line">    &quot;no-cond-assign&quot;: 2,                      //条件语句中禁止赋值操作</span><br><span class="line">    &quot;no-native-reassign&quot;: 2,                  //禁止覆盖原生对象</span><br><span class="line"></span><br><span class="line">    //代码风格优化</span><br><span class="line">    &quot;no-else-return&quot;: 1,                      //在else代码块中return，else是多余的</span><br><span class="line">    &quot;no-multi-spaces&quot;: 1,                     //不允许多个空格</span><br><span class="line">    &quot;key-spacing&quot;: [1, &#123;&quot;beforeColon&quot;: false, &quot;afterColon&quot;: true&#125;],//object直接量建议写法 : 后一个空格前面不留空格</span><br><span class="line">    &quot;block-scoped-var&quot;: 2,                    //变量应在外部上下文中声明，不应在&#123;&#125;代码块中</span><br><span class="line">    &quot;consistent-return&quot;: 2,                   //函数返回值可能是不同类型</span><br><span class="line">    &quot;accessor-pairs&quot;: 2,                      //object getter/setter方法需要成对出现</span><br><span class="line">    &quot;dot-location&quot;: [2, &quot;property&quot;],          //换行调用对象方法  点操作符应写在行首</span><br><span class="line">    &quot;no-lone-blocks&quot;: 2,                      //多余的&#123;&#125;嵌套</span><br><span class="line">    &quot;no-empty-label&quot;: 2,                      //无用的标记</span><br><span class="line">    &quot;no-extend-native&quot;: 2,                    //禁止扩展原生对象</span><br><span class="line">    &quot;no-floating-decimal&quot;: 2,                 //浮点型需要写全 禁止.1 或 2.写法</span><br><span class="line">    &quot;no-loop-func&quot;: 2,                        //禁止在循环体中定义函数</span><br><span class="line">    &quot;no-new-func&quot;: 2,                         //禁止new Function(...) 写法</span><br><span class="line">    &quot;no-self-compare&quot;: 2,                     //不允与自己比较作为条件</span><br><span class="line">    &quot;no-sequences&quot;: 2,                        //禁止可能导致结果不明确的逗号操作符</span><br><span class="line">    &quot;no-throw-literal&quot;: 2,                    //禁止抛出一个直接量 应是Error对象</span><br><span class="line">    &quot;no-return-assign&quot;: [2, &quot;always&quot;],        //不允return时有赋值操作</span><br><span class="line">    &quot;no-redeclare&quot;: [2, &#123;&quot;builtinGlobals&quot;: true&#125;],//不允许重复声明</span><br><span class="line">    &quot;no-unused-expressions&quot;: [2, &#123;&quot;allowShortCircuit&quot;: true, &quot;allowTernary&quot;: true&#125;],//不执行的表达式</span><br><span class="line">    &quot;no-useless-call&quot;: 2,                     //无意义的函数call或apply</span><br><span class="line">    &quot;no-useless-concat&quot;: 2,                   //无意义的string concat</span><br><span class="line">    &quot;no-void&quot;: 2,                             //禁用void</span><br><span class="line">    &quot;no-with&quot;: 2,                             //禁用with</span><br><span class="line">    &quot;space-infix-ops&quot;: 2,                     //操作符前后空格</span><br><span class="line">    &quot;valid-jsdoc&quot;: [2, &#123;&quot;requireParamDescription&quot;: true, &quot;requireReturnDescription&quot;: true&#125;],//jsdoc</span><br><span class="line">    &quot;no-warning-comments&quot;: [2, &#123; &quot;terms&quot;: [&quot;todo&quot;, &quot;fixme&quot;, &quot;any other term&quot;], &quot;location&quot;: &quot;anywhere&quot; &#125;],//标记未写注释</span><br><span class="line">    &quot;curly&quot;: 1                                //if、else、while、for代码块用&#123;&#125;包围</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="灵异事件"><a href="#灵异事件" class="headerlink" title="灵异事件"></a>灵异事件</h3><ul>
+<li>在公司电脑，首先我没注意到自己的sublime不是安装版的，而是一个解压使用版（记不清为啥了，好像是公司的防火墙把sublime官网墙掉了，所以当时通过非官方渠道下载的），实践（花了我1h配置）证明，这个不行，总是报错，后来我检查了一下sublime，弃之，重新下载了安装版，搞定。</li>
+<li>公司的机器目前是windows，我是经过了层层配置才搞定的。</li>
+<li>灵异的是自己的mac把两个插件安装完之后，没有进行任何配置，重启sublime，竟然报做了，可以正常使用了。。。。。不知为啥。我确定两件事<ul>
+<li>sublimeLinter绝对干净，没有任何配置</li>
+<li>我没找到本地的.eslintrc文件</li>
+</ul>
+</li>
+</ul>
+<p>猜测是不是之前貌似在别的项目中，package包安装使用过了eslint，只是自己没有用到，忽略了。反正就是很灵异能用了。后期如果发现了原因，再过来更新吧。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>安装完eslint，重启一下本地项目（sublime必须重启方可生效）。会发现一片红，特别好看～但是把一片红改掉的感觉也是特别的好～～</p>
+<p>遵循规则，不逾矩，方寸之间尽显稳重。</p>
+<p>送给自己～</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sublime/" rel="tag"><i class="fa fa-tag"></i> sublime</a>
+          
+            <a href="/tags/eslint/" rel="tag"><i class="fa fa-tag"></i> eslint</a>
+          
+            <a href="/tags/react/" rel="tag"><i class="fa fa-tag"></i> react</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/js-offline.html" rel="next" title="离线应用与客户端存储">
+                <i class="fa fa-chevron-left"></i> 离线应用与客户端存储
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="洪杨" />
+            
+              <p class="site-author-name" itemprop="name">洪杨</p>
+              <p class="site-description motion-element" itemprop="description">生活不止有苟且，还有读不懂的诗和到不了的远方。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一次项目"><span class="nav-number">2.</span> <span class="nav-text">第一次项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eslint工具"><span class="nav-number">3.</span> <span class="nav-text">eslint工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备工作"><span class="nav-number">4.</span> <span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#本地全局安装eslint"><span class="nav-number">4.1.</span> <span class="nav-text">本地全局安装eslint</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sublime安装插件"><span class="nav-number">4.2.</span> <span class="nav-text">sublime安装插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置"><span class="nav-number">4.3.</span> <span class="nav-text">配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sublimeLinter集成配置"><span class="nav-number">4.3.1.</span> <span class="nav-text">sublimeLinter集成配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#规则配置"><span class="nav-number">4.3.2.</span> <span class="nav-text">规则配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#灵异事件"><span class="nav-number">5.</span> <span class="nav-text">灵异事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">洪杨</span>
+
+  <span class="post-meta-divider">|</span>
+  <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>
