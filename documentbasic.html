@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png?v=5.1.4">
+
+
+
+
+
+
+  <meta name="keywords" content="js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="js基础Dom相关方法和属性知识回顾">
+<meta name="keywords" content="js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript基础系列之dom">
+<meta property="og:url" content="http://yoursite.com/documentbasic.html">
+<meta property="og:site_name" content="啤酒泡泡">
+<meta property="og:description" content="js基础Dom相关方法和属性知识回顾">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-06-22T18:21:57.563Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript基础系列之dom">
+<meta name="twitter:description" content="js基础Dom相关方法和属性知识回顾">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":5},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/documentbasic.html"/>
+
+
+
+
+
+  <title>javascript基础系列之dom | 啤酒泡泡</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?5107b76fc62676dd7b1eccd4126ad6df";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">啤酒泡泡</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+  <script>
+    (function(){
+        if(''){
+            if (prompt('time we together (format: yyyymmdd)') !== ''){
+                alert('sorry,it`s not today!');
+                history.back();
+            }
+        }
+    })();
+</script>
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/documentbasic.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="洪杨">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="啤酒泡泡">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">javascript基础系列之dom</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-23T09:00:00+08:00">
+                2020-06-23
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2020-06-23T02:21:57+08:00">
+                2020-06-23
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/js/" itemprop="url" rel="index">
+                    <span itemprop="name">js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i> 阅读次数
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>js基础Dom相关方法和属性知识回顾</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>随着前端领域逐渐被 React/Vue 这两个MVVM的框架占领，我们前端开发过程中越来越少的存在去操作dom的场景了。通常情况下出现的比较多的就是用虚拟dom去替换了传统的dom操作。但是我始终认为Dom操作是前端最最基础的一个点，这篇文章来汇总下常见的Dom操作。</p>
+<h3 id="Dom操作分类"><a href="#Dom操作分类" class="headerlink" title="Dom操作分类"></a>Dom操作分类</h3><p>常规的来说Dom操作主要分为增删改查以及插入五个类别，下面分别阐述：</p>
+<h4 id="新增（创建）Dom"><a href="#新增（创建）Dom" class="headerlink" title="新增（创建）Dom"></a>新增（创建）Dom</h4><p>主要分为元素、属性、文本、注释节点的创建</p>
+<ul>
+<li>元素节点的创建</li>
+</ul>
+<p>该方法在我们工作中应该是用的比较多的一个方法了，入参字符串为当前创建的节点的html标签名。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> div = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>)</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'this is a div'</span>, div)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>属性节点的创建</p>
+<ul>
+<li>设置Dom元素的基本属性</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.id = <span class="string">'root'</span></span><br><span class="line"><span class="comment">// or 上面的div</span></span><br><span class="line">div.id = <span class="string">'divid'</span></span><br><span class="line"><span class="comment">// but class 是js的关键字，这里面类似JSX使用className 代替</span></span><br><span class="line">div.className = <span class="string">'divclass'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>设置自定义属性节点 <strong>createAttribute</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> attr = <span class="built_in">document</span>.createAttribute(<span class="string">'myAttrId'</span>);</span><br><span class="line">attr.value = <span class="string">'new attr'</span></span><br><span class="line"></span><br><span class="line">div.setAttributeNode(attr)</span><br></pre></td></tr></table></figure>
+<p>具体有啥用？ 展开说说，就是说 createAttribute 方法会自定义一个属性，也就是类似我们之前JQ年代的data-xxx 属性一样，上面的代码作用如下</p>
+<ol>
+<li>创建一个attr 名称为 myattrid（html中规定所有的attr均为小写）</li>
+<li>设置该 myattrid 的值为 ‘new attr’ 字符串</li>
+<li>把该属性增加到上面新建的div 上</li>
+</ol>
+<p>三步完成之后，之前新建的div上面就会有一个 叫做myattrid的属性，其值为 ‘new attr’</p>
+</li>
+<li><p>文本节点的创建</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> text = <span class="built_in">document</span>.createTextNode(<span class="string">'this is text'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(text);</span><br><span class="line"><span class="keyword">typeof</span> text <span class="comment">// 'object'</span></span><br></pre></td></tr></table></figure>
+<p>创建一个文本节点，可以用来作为html标签内容（ps:可以看到该节点是一个object，应该和普通字符串区分）</p>
+<ul>
+<li>注释节点的创建</li>
+</ul>
+<p>创建一个注释 不再赘述</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> comment = <span class="built_in">document</span>.createComment(<span class="string">'这是一个注释'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(comment); <span class="comment">// &lt;!--这是一个注释--&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="删除Dom"><a href="#删除Dom" class="headerlink" title="删除Dom"></a>删除Dom</h4><p>主要分为两类</p>
+<ul>
+<li>删除dom节点</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const div = document.getElementById(&apos;id&apos;);</span><br><span class="line">// 删除body下所有属性为id的div 节点</span><br><span class="line">document.body.removeChild(div);</span><br><span class="line">// or div直接执行 remove，即删除div</span><br><span class="line">div.remove();</span><br></pre></td></tr></table></figure>
+<ul>
+<li>删除dom节点的属性</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 移除dom基本元素</span><br><span class="line">div.removeAttribute(&apos;class&apos;);</span><br><span class="line">// 移除dom自定义元素</span><br><span class="line">div.removeAttributeNode(&apos;myattrid&apos;);</span><br></pre></td></tr></table></figure>
+<h4 id="修改（替换）Dom"><a href="#修改（替换）Dom" class="headerlink" title="修改（替换）Dom"></a>修改（替换）Dom</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newElement = <span class="built_in">document</span>.createElement(<span class="string">'p'</span>);</span><br><span class="line"><span class="keyword">const</span> span = <span class="built_in">document</span>.getElementById(<span class="string">'span'</span>);</span><br><span class="line"><span class="comment">//查找</span></span><br><span class="line"><span class="keyword">const</span> parent = span.parentNode;</span><br><span class="line"><span class="comment">//替换元素</span></span><br><span class="line"><span class="keyword">const</span> replace = parent.replaceChild(newElement, span);</span><br></pre></td></tr></table></figure>
+<h4 id="查找Dom"><a href="#查找Dom" class="headerlink" title="查找Dom"></a>查找Dom</h4><p>客观的说，查dom可能才是用的最多的操作。</p>
+<p>主要分为五类查找</p>
+<ul>
+<li>根据id查找</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const id = document.getElementById(&apos;test&apos;)</span><br><span class="line">console.log(id) // 返回id为test的标签，仅返回第一个，查询效率高</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据class查找</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> className = <span class="built_in">document</span>.getElementsByClassName(<span class="string">'class'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(className); <span class="comment">// 返回class为‘class’的标签集合(HTMLCollection),类数组</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据标签名查找</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> tagName = <span class="built_in">document</span>.getElementsByTagName(<span class="string">'div'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(tagName); <span class="comment">// 返回tag为‘div’的标签集合(HTMLCollection),类数组</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据属性名查找</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> attr = <span class="built_in">document</span>.getElementsByName(<span class="string">'attr'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(attr); <span class="comment">// 返回属性为attr的标签集合（NodeList），类数组</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>css选择器查找</strong></li>
+</ul>
+<p>核心为两个方法 querySelector 和 querySelectorAll（忘记之前在某一篇文章看过一句话，这两个方法是根据jquery实现的，但是正是这两个方法加速了jquery坠落的速度）</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">'.element'</span>)</span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">'#element'</span>)</span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">'div'</span>)</span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">'[name="username"]'</span>)</span><br><span class="line"><span class="built_in">document</span>.querySelector(<span class="string">'div + p &gt; span'</span>)</span><br></pre></td></tr></table></figure>
+<p>不用jquery的情况，用下面一句话可以简单替换基本查找的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> $ = <span class="built_in">document</span>.querySelector.bind(<span class="built_in">document</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="插入Dom"><a href="#插入Dom" class="headerlink" title="插入Dom"></a>插入Dom</h4><p>可以直接使用appendChild 对已经存在的标签插入一个节点</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.appendChild(div)</span><br></pre></td></tr></table></figure>
+<p>也可以使用 insertAdjacentHTML 来进行插入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.body.insertAdjacentHTML(</span><br><span class="line">  <span class="string">'beforeend'</span>,</span><br><span class="line">  div</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>insertAdjacentHTML 主要有四个插入位置</p>
+<ul>
+<li>‘beforebegin’: 元素之前</li>
+<li>‘afterbegin’: 元素内，位于现存的第一个子元素之前</li>
+<li>‘beforeend’: 元素内，位于现存的最后一个子元素之后</li>
+<li>‘afterend’: 元素之后</li>
+</ul>
+<p>具体如下</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- beforebegin --&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">  &lt;!-- afterbegin --&gt;</span><br><span class="line">  &lt;span&gt;&lt;/span&gt;</span><br><span class="line">  &lt;!-- beforeend --&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;!-- afterend --&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>这些方法其实就是jquery这个红极一时的js库的核心知识点。所以应该对技术怀有一颗敬畏之心，切不可眼高手低。万丈高楼平地而起，夯实基础很重要。</p>
+
+      
+    </div>
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/js/" rel="tag"><i class="fa fa-tag"></i> js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/designpatterntype.html" rel="next" title="设计模式系列之基础知识2">
+                <i class="fa fa-chevron-left"></i> 设计模式系列之基础知识2
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.png"
+                alt="洪杨" />
+            
+              <p class="site-author-name" itemprop="name">洪杨</p>
+              <p class="site-description motion-element" itemprop="description">生活不止有苟且，还有读不懂的诗和到不了的远方。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dom操作分类"><span class="nav-number">2.</span> <span class="nav-text">Dom操作分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新增（创建）Dom"><span class="nav-number">2.1.</span> <span class="nav-text">新增（创建）Dom</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除Dom"><span class="nav-number">2.2.</span> <span class="nav-text">删除Dom</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改（替换）Dom"><span class="nav-number">2.3.</span> <span class="nav-text">修改（替换）Dom</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查找Dom"><span class="nav-number">2.4.</span> <span class="nav-text">查找Dom</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入Dom"><span class="nav-number">2.5.</span> <span class="nav-text">插入Dom</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">洪杨</span>
+
+  <span class="post-meta-divider">|</span>
+  <span>Hosted by <a href="https://pages.coding.me" style="font-weight: bold">Coding Pages</a></span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
+</html>
